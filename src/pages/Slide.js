@@ -24,20 +24,44 @@ export default class Slide extends React.Component{
         };
         this.clickNext = this.clickNext.bind(this);
         this.clickPrevious = this.clickPrevious.bind(this);
+        this.onKeyPress = this.onKeyPress.bind(this);
     }
     
     clickNext(){
+        // TODO: Don't just blindly change the state. This logic should be smart enough to
+        // realize when it's safe to change the state and when it's not. AKA are there more
+        // photos in this direction?
         this.setState({
             currentPic: this.state.currentPic + 1
         });
-        console.log(this.state.currentPic);
     }
     
     clickPrevious(){
+        // TODO: Don't just blindly change the state. This logic should be smart enough to
+        // realize when it's safe to change the state and when it's not. AKA are there more
+        // photos in this direction?
         this.setState({
             currentPic: this.state.currentPic -1
         });
     
+    }
+
+    onKeyPress(event) {
+        if (event.code === 'ArrowRight') {
+            this.clickNext();
+        } else if (event.code === 'ArrowLeft') {
+            this.clickPrevious();
+        }
+    }
+
+    // Adding keyboard event when the component loads (aka when the page loads)
+    componentDidMount() {
+        document.addEventListener("keyup", this.onKeyPress, false);
+    }
+
+    // Removing keyboard event handler when the component unloads (aka navigate to another page)
+    componentWillUnmount() {
+        document.removeEventListener("keyup", this.onKeyPress, false);
     }
     //Sina Hello...
     //As you can see at the bottoom the most basic input onKeyPress is working
@@ -58,10 +82,6 @@ export default class Slide extends React.Component{
             prevbutton = <span className='arrow prev' onClick={this.clickPrevious}>
                 <i className='fa fa-caret-square-o-left' aria-hidden='true'></i></span>;
         }
-
-        function myFunction() {
-            console.log('You pressed a key inside the input field');
-        }
         return (
             <div className='slide-content'>
                 <Menu />
@@ -70,7 +90,6 @@ export default class Slide extends React.Component{
                 </div>; 
                 {nextbutton}
                 {prevbutton}
-                <input type="text" onKeyDown={myFunction} />     
             </div>
         );
     }

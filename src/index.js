@@ -1,6 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
-import ReactDom from 'react-dom';
+import ReactDOM from 'react-dom';
 import './styles/main.css';
 import Home from './pages/Home';
 import Lonely from './pages/Lonely';
@@ -59,7 +59,7 @@ class App extends React.Component {
     }
 }
 
-ReactDom.render(
+ReactDOM.render(
     <App />,
     document.getElementById('root')
 );
